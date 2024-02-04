@@ -11,7 +11,7 @@ let noise3D
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // planets 
@@ -19,15 +19,15 @@ export function sketch() {
         silverScale: 2,
         goldPos: new THREE.Vector3(-4, 1.5, 0),
         silverPos: new THREE.Vector3(4, 1.5, 0),
-        goldSpeed: 2,
-        silverSpeed: 2,
-        silverRotationSpeed: 0,
+        goldSpeed: 1.5,
+        silverSpeed: 2.5,
+        silverRotationSpeed: -.005,
         silverLight: false,
         // view
         lookAtCenter: new THREE.Vector3(0, 1, 0),
-        cameraPosition: new THREE.Vector3(Math.random()*5, -5, 20),
+        cameraPosition: new THREE.Vector3(Math.random()*5, 10, 20),
         autoRotate: true,
-        autoRotateSpeed: -10,
+        autoRotateSpeed: -2,
         camera: 35,
         // world
         backgroundColor: 0xff0000,
@@ -179,6 +179,9 @@ export function sketch() {
         }
         // ...
 
+        pointLight.intensity =  MIC.getHighsVol(1, 4)
+        pointLight2.intensity = MIC.getHighsVol(3,.1)
+        
         controls.update()
         renderer.render(scene, camera) // RENDER
         if (showStats) stats.end() // XXX

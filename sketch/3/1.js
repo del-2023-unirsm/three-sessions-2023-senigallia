@@ -13,7 +13,7 @@ let controls
 let noise3D
 
 export function sketch() {
-    console.log("Sketch launched")
+    // ("Sketch launched")
 
     renderer.toneMappingExposure = 2
 

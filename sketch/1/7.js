@@ -11,30 +11,27 @@ let noise3D
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
-
-    let backColorLightness = 50 + '%'
-    let backColor = new THREE.Color(`hsl(0, 100%, ${backColorLightness})`);
+    // console.log("Sketch launched")
 
     const p = {
         // planets 
         goldScale: 3,
         silverScale: 3,
-        goldPos: new THREE.Vector3(-4, 1.5, 0),
-        silverPos: new THREE.Vector3(4, 1.5, 0),
-        goldSpeed: 2,
-        silverSpeed: 1,
-        silverRotationSpeed: .005,
+        goldPos: new THREE.Vector3(-4, 2, 0),
+        silverPos: new THREE.Vector3(4, 2, 0),
+        goldSpeed: 0.5,
+        silverSpeed: 0.5,
+        silverRotationSpeed: 0.005,
         silverLight: false,
         // view
         lookAtCenter: new THREE.Vector3(0, 1, 0),
-        cameraPosition: new THREE.Vector3(0, -5, 1.5),
+        cameraPosition: new THREE.Vector3(Math.random()*30, -5, 30),
         autoRotate: false,
-        autoRotateSpeed: -2,
-        camera: 35,
+        autoRotateSpeed: -10,
+        camera: 45,
         // world
-        backgroundColor: backColor,
-        floor: -5,
+        backgroundColor: 0xff0000,
+        floor: -10,
     }
 
     // other parameters
@@ -169,8 +166,8 @@ export function sketch() {
         if (gold) {
             const t1 = t * p.goldSpeed
             gold.position.x = p.goldPos.x + noise3D(0, t1, 0) * 2
-            gold.position.y = p.goldPos.y + noise3D(t1 + 4, 0, 0) * .3
-            gold.position.z = p.goldPos.z + noise3D(0, 0, t1 + 8) * .1
+            gold.position.y = p.goldPos.y + noise3D(t1 + 4, 0, 0) * 1.5
+            gold.position.z = p.goldPos.z + noise3D(0, 0, t1 + 8) * .4
         }
         if (silver) {
             const t2 = t * p.silverSpeed + 10
@@ -181,10 +178,6 @@ export function sketch() {
             silver.rotation.y += noise3D(0, 0, t + 10) * p.silverRotationSpeed
         }
         // ...
-
-        pointLight.intensity =  MIC.getHighsVol(1, 4)
-        pointLight2.intensity = MIC.getHighsVol(3,.1)
-        
 
         controls.update()
         renderer.render(scene, camera) // RENDER

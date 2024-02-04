@@ -13,7 +13,7 @@ let controls
 let noise3D
 
 export function sketch() {
-    console.log("Sketch launched")
+   // console.log("Sketch launched")
 
     const p = {
         // view

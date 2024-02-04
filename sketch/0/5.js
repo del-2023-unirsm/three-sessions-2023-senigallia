@@ -19,7 +19,7 @@ let renderPass
 let bloomPass
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // toggle
@@ -27,18 +27,18 @@ export function sketch() {
         scaleVol: false,
         modeY: true,
         // grid
-        gridUnit: 20,
-        rows: 5,
-        columns: 14,
+        gridUnit: 10,
+        rows: 10,
+        columns: 28,
         // unit transformation
         micSensitivity: .3,
         pointMaxWidth: 10,
-        pointMinWidth: 10,
-        pointMaxY: 50,
+        pointMinWidth: 4,
+        pointMaxY: 80,
         pointGroundY: 0,
         // view
-        lookAtCenter: new THREE.Vector3(-10, 10, -10),
-        cameraPosition: new THREE.Vector3(-10, 480, 0),
+        lookAtCenter: new THREE.Vector3(-5, 10, -5),
+        cameraPosition: new THREE.Vector3(-5, 360, 0),
         // lookAtCenter: new THREE.Vector3(-unit/2, 0, -unit/2),
         // cameraPosition: new THREE.Vector3(-unit/2, 100*, 0),
         autoRotate: false,
@@ -81,9 +81,9 @@ export function sketch() {
     scene = new THREE.Scene()
     const numParticles = p.columns * p.rows
     const positions = new Float32Array(numParticles * 3)
+    const scales = new Float32Array(numParticles)
     const positionsYToBe = new Float32Array(numParticles)
     const scalesToBe = new Float32Array(numParticles)
-    const scales = new Float32Array(numParticles)
     let i = 0, j = 0
     for (let ix = 0; ix < p.columns; ix++) {
         for (let iy = 0; iy < p.rows; iy++) {
@@ -162,7 +162,12 @@ export function sketch() {
                         }
                     } else {
                         const pointVolScale = MIC.mapSound(ix, p.columns, p.pointMinWidth, p.pointMaxWidth)
-                        scales[j] = pointVolScale
+                        scalesToBe[j] = pointVolScale
+                        if (scalesToBe[j] > scales[j]) {
+                            scales[j] += p.micSensitivity / 3
+                        } else if (scalesToBe[j] < scales[j]) {
+                            scales[j] -= p.micSensitivity / 3
+                        }
                     }
                 } else if (p.kind === 'freq2') {
                     const pointVol = MIC.mapSound(ix, p.columns, p.pointGroundY, p.pointMaxY)
