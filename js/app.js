@@ -37,7 +37,7 @@ global.GUI = GUI
 global.CANNON = CANNON
 global.NOISE = NOISE
 
-global.showStats = false // xxx
+global.showStats = true // xxx
 
 let myThree
 const artFolder = "sketch"
@@ -66,7 +66,7 @@ const changeSketch = (sketch) => {
 	// if (isSketchValid(`../sketch/${sketchName}`)) { // <<< enable locally to avoid stops on empty sketches
 	current_sketch = sketch
 	loadSketch(sketchName)
-	console.log('Loading Sketch: ' + sketchName)
+	// console.log('Loading Sketch: ' + sketchName)
 	document.location.hash = loc
 	// }
 }
@@ -100,7 +100,7 @@ class mic {
 
 		function startMic(context) {
 			const processSound = (stream) => {
-				console.log("Starting microphone...")
+				// console.log("Starting microphone...")
 				// analyser extracts frequency, waveform, and other data
 				const analyser = context.createAnalyser()
 				analyser.smoothingTimeConstant = 0.2
@@ -236,9 +236,11 @@ class mic {
 		return this
 	}
 }
-const initAudio = () => {
+global.initAudio = () => { // XXX special open day edition, don't use on live stage, see live release on github
 	global.MIC = new mic()
-	console.log(global.MIC)
+	// console.log(global.MIC)
+	document.getElementById("loader").style.display = "none"
+	randomSketch();
 }
 
 // UI
@@ -252,6 +254,13 @@ const onKeyDown = (event) => {
 		} else if (keyCode == 220) toggleMouse() // \
 		else if (keyCode == 117) toggleFullscreen() // F6
 		else if (keyCode == 222) initAudio() // (shift) + ?
+		else if (keyCode == 32) {
+			event.preventDefault()
+			randomSketch()
+		} else if (keyCode == 13) {
+			event.preventDefault()
+			reclickSketch()
+		}
 	}
 }
 window.addEventListener('keydown', function (e) {
@@ -276,9 +285,10 @@ const toggleFullscreen = () => {
 // TEXTURES PRELOAD
 THREE.Cache.enabled = true
 THREE.DefaultLoadingManager.onLoad = () => {
-	console.log('Loading Complete!')
+	// console.log('Loading Complete!')
 	areTexturesReady = true
-	document.getElementById("loader").style.display = "none"
+	document.getElementById("loaderButton").style.display = "initial"
+	document.getElementById("loaderText").style.display = "none"
 }
 global.cubeTextures = []
 const loadCubeTexture = (name, path, format) => {
@@ -291,7 +301,7 @@ const loadCubeTexture = (name, path, format) => {
 	global.cubeTextures.push({
 		name: name,
 		texture: cubeTextureLoader.load(urls, (cube) => {
-			console.log('loadedCubeTexture: ' + cube)
+			// console.log('loadedCubeTexture: ' + cube)
 		})
 	})
 }
@@ -302,7 +312,7 @@ const loadTexture = (name, path, format) => {
 	global.textures.push({
 		name: name,
 		texture: textureLoader.load(url, (texture) => {
-			console.log('loadedTexture: ' + texture)
+			// console.log('loadedTexture: ' + texture)
 		})
 	})
 }
@@ -326,6 +336,7 @@ loadTexture('Lavatile', './assets/textures/lavatile', '.jpg') // 5
 // INIT
 const init = () => {
 	window.document.body.style.cursor = 'none'
+	toggleMouse()
 	changeSet(0)
 	// RENDERER
 	global.renderer = new THREE.WebGLRenderer({
@@ -344,3 +355,20 @@ const init = () => {
 	}
 }
 window.addEventListener('load', init)
+
+const randomSketch = () => {
+	const sets = [0, 1, 2, 3, 4, 5, 6]
+	const sketches = [11, 12, 7, 13, 3, 5, 2]
+	global.playSet = Math.round(Math.random() * (sets.length - 1));
+	const playSetHowManySketches = sketches[playSet] - 2;
+	global.playSketch = 1 + Math.round(Math.random() * (playSetHowManySketches));
+	console.log(playSet, playSetHowManySketches, playSketch);
+	changeSet(global.playSet);
+	changeSketch(global.playSketch);
+}
+
+const reclickSketch = () => {
+	if (global.playSketch) {
+		changeSketch(global.playSketch);
+	}
+}

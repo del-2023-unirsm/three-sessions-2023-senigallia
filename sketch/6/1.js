@@ -14,7 +14,7 @@ let slideShow
 let images = []
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     // const p = {
     //     // bloom
@@ -29,7 +29,7 @@ export function sketch() {
         const url = path + format
         images.push(
             imageLoader.load(url, (image) => {
-                console.log('loadedImage: ' + image)
+                // console.log('loadedImage: ' + image)
             })
         )
     }

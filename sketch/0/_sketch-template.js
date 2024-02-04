@@ -9,7 +9,7 @@ let gui
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
     const stats = new Stats() // XXX
     canvas3D.appendChild(stats.dom)
 

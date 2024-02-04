@@ -13,7 +13,7 @@ let noise3D
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // planets 

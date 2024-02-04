@@ -19,7 +19,7 @@ let renderPass
 let bloomPass
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // toggle
@@ -27,18 +27,18 @@ export function sketch() {
         scaleVol: false,
         modeY: true,
         // grid
-        gridUnit: 10,
-        rows: 10,
-        columns: 28,
+        gridUnit: 5,
+        rows: 20,
+        columns: 56,
         // unit transformation
         micSensitivity: .3,
         pointMaxWidth: 10,
         pointMinWidth: 4,
-        pointMaxY: 80,
+        pointMaxY: 20,
         pointGroundY: 0,
         // view
-        lookAtCenter: new THREE.Vector3(-5, 10, -5),
-        cameraPosition: new THREE.Vector3(-5, 360, 0),
+        lookAtCenter: new THREE.Vector3(-2.5, 10, -2.6),
+        cameraPosition: new THREE.Vector3(-2.5, 360, 0),
         // lookAtCenter: new THREE.Vector3(-unit/2, 0, -unit/2),
         // cameraPosition: new THREE.Vector3(-unit/2, 100*, 0),
         autoRotate: false,

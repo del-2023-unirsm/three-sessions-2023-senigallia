@@ -11,7 +11,10 @@ let noise3D
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
+
+    let backColorLightness = 50 + '%'
+    let backColor = new THREE.Color(`hsl(0, 100%, ${backColorLightness})`);
 
     const p = {
         // planets 
@@ -20,17 +23,17 @@ export function sketch() {
         goldPos: new THREE.Vector3(-4, 1.5, 0),
         silverPos: new THREE.Vector3(4, 1.5, 0),
         goldSpeed: 2,
-        silverSpeed: 3,
-        silverRotationSpeed: -0.005,
+        silverSpeed: 1,
+        silverRotationSpeed: .005,
         silverLight: false,
         // view
         lookAtCenter: new THREE.Vector3(0, 1, 0),
-        cameraPosition: new THREE.Vector3(Math.random()*-10, -5, 7),
-        autoRotate: true,
-        autoRotateSpeed: 2,
+        cameraPosition: new THREE.Vector3(0, -5, 1.5),
+        autoRotate: false,
+        autoRotateSpeed: -2,
         camera: 35,
         // world
-        backgroundColor: 0xff0000,
+        backgroundColor: backColor,
         floor: -5,
     }
 
@@ -166,8 +169,8 @@ export function sketch() {
         if (gold) {
             const t1 = t * p.goldSpeed
             gold.position.x = p.goldPos.x + noise3D(0, t1, 0) * 2
-            gold.position.y = p.goldPos.y + noise3D(t1 + 4, 0, 0) * 1.5
-            gold.position.z = p.goldPos.z + noise3D(0, 0, t1 + 8) * .4
+            gold.position.y = p.goldPos.y + noise3D(t1 + 4, 0, 0) * .3
+            gold.position.z = p.goldPos.z + noise3D(0, 0, t1 + 8) * .1
         }
         if (silver) {
             const t2 = t * p.silverSpeed + 10
@@ -178,6 +181,10 @@ export function sketch() {
             silver.rotation.y += noise3D(0, 0, t + 10) * p.silverRotationSpeed
         }
         // ...
+
+        pointLight.intensity =  MIC.getHighsVol(1, 4)
+        pointLight2.intensity = MIC.getHighsVol(3,.1)
+        
 
         controls.update()
         renderer.render(scene, camera) // RENDER

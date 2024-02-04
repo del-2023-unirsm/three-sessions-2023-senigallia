@@ -20,7 +20,7 @@ let bloomPass
 let loaderGLTF
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // time
@@ -109,7 +109,7 @@ export function sketch() {
             scene.add(calavera)
             let calaveraMat = calavera.children[0].material
             let calaveraToothMat = calavera.children[1].material
-            console.log(calaveraMat)
+            // console.log(calaveraMat)
             calaveraMat.map = null
             calaveraToothMat.map = null
             calaveraMat.roughness = 1
@@ -117,10 +117,10 @@ export function sketch() {
             gltfLoaded = true
         },
         (xhr) => {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded')
+            // console.log((xhr.loaded / xhr.total * 100) + '% loaded')
         },
         (error) => {
-            console.log('An error happened loading the GLTF scene')
+            // console.log('An error happened loading the GLTF scene')
         }
     )
 

@@ -19,7 +19,7 @@ let renderPass
 let bloomPass
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // toggle
@@ -38,7 +38,7 @@ export function sketch() {
         pointGroundY: 0,
         // view
         lookAtCenter: new THREE.Vector3(-2.5, -20, -2.6),
-        cameraPosition: new THREE.Vector3(-2.5 + 40, Math.random() * 50 + 100, Math.random() * 80 + 300),
+        cameraPosition: new THREE.Vector3(-2.5 + 40, Math.random() * 50 + 100, - Math.random() * 80 - 300),
         // lookAtCenter: new THREE.Vector3(-unit/2, 0, -unit/2),
         // cameraPosition: new THREE.Vector3(-unit/2, 100*, 0),
         autoRotate: true,

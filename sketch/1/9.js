@@ -11,27 +11,27 @@ let noise3D
 let controls
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // planets 
         goldScale: 3,
         silverScale: 3,
-        goldPos: new THREE.Vector3(-4, 2, 0),
-        silverPos: new THREE.Vector3(4, 2, 0),
-        goldSpeed: 0.5,
-        silverSpeed: 0.5,
-        silverRotationSpeed: 0.005,
+        goldPos: new THREE.Vector3(-4, 1.5, 0),
+        silverPos: new THREE.Vector3(4, 1.5, 0),
+        goldSpeed: 2,
+        silverSpeed: 3,
+        silverRotationSpeed: -0.005,
         silverLight: false,
         // view
         lookAtCenter: new THREE.Vector3(0, 1, 0),
-        cameraPosition: new THREE.Vector3(Math.random()*30, -5, 30),
-        autoRotate: false,
-        autoRotateSpeed: -10,
-        camera: 45,
+        cameraPosition: new THREE.Vector3(Math.random()*-10, -5, 7),
+        autoRotate: true,
+        autoRotateSpeed: 2,
+        camera: 35,
         // world
         backgroundColor: 0xff0000,
-        floor: -10,
+        floor: -5,
     }
 
     // other parameters

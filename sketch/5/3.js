@@ -22,7 +22,7 @@ let bloomPass
 const pieceMaterials = []
 
 export function sketch() {
-    console.log("Sketch launched")
+    // console.log("Sketch launched")
 
     const p = {
         // start

@@ -16,7 +16,22 @@
 </head>
 
 <body>
-  <div id="loader" class="loader">Loading textures...</div>
+  <div id="loader" class="loader">
+    <h1>The nuvole sessions </h1>
+    <p>© 2023 - Daniele @Fupete and the course DEL-2023 at DESIGN.unirsm<br />
+    <a href="https://github.com/del-2023-unirsm">github.com/del-2023-unirsm</a> — <a href="https://github.com/fupete">github.com/fupete</a><br />
+    Educational purposes, MIT License, 2023, San Marino</p></p>
+    <p id="loaderText">Loading textures...</p>
+    <button id="loaderButton" type="button" style="display:none" onclick="global.initAudio()">START</button>
+    <p>
+      <code>SPACE</code>: load a random sketch<br />
+      <code>RETURN</code>: reload/init current sketch<br /><br />
+      <code>0–6</code>: change set of sketches<br />
+      <code>a-z</code>: change between available sketches on current set, <code>a</code> is blank/black screen<br />
+      <code>\</code>: toggle mouse cursor<br />
+      <code>F6</code>: toggle fullscreen
+    </p>
+  </div>
   <div id="canvas3D" class="canvas"></div>
   <div id="stats"></div>
 </body>
