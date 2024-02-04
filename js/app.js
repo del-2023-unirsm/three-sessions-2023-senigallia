@@ -48,6 +48,9 @@ let showCursor = false
 let areTexturesReady = false
 global.canvas3D = document.getElementById("canvas3D") // global canvas3D
 
+let playingDirector = false
+let nextCut
+
 // CHANGE SET & SKETCH
 const changeSet = (set) => {
 	current_set = set
@@ -260,6 +263,19 @@ const onKeyDown = (event) => {
 		} else if (keyCode == 13) {
 			event.preventDefault()
 			reclickSketch()
+		} else if (keyCode == 116) {
+			event.preventDefault() // F5
+			if (!playingDirector) {
+				// console.log("play director")
+				document.getElementById("directorModeStatus").style.display = "initial"
+				playingDirector = true;
+				playDirector();
+			} else {
+				// console.log("stop director");
+				document.getElementById("directorModeStatus").style.display = "none"
+				playingDirector = false;
+				clearInterval(nextCut);
+			}
 		}
 	}
 }
@@ -362,7 +378,7 @@ const randomSketch = () => {
 	global.playSet = Math.round(Math.random() * (sets.length - 1));
 	const playSetHowManySketches = sketches[playSet] - 2;
 	global.playSketch = 1 + Math.round(Math.random() * (playSetHowManySketches));
-	console.log(playSet, playSetHowManySketches, playSketch);
+	// console.log(playSet, playSetHowManySketches, playSketch);
 	changeSet(global.playSet);
 	changeSketch(global.playSketch);
 }
@@ -371,4 +387,14 @@ const reclickSketch = () => {
 	if (global.playSketch) {
 		changeSketch(global.playSketch);
 	}
+}
+
+const playDirector = () => {
+	const randSec = 5 + Math.round(Math.random() * 20);
+	nextCut = setTimeout(() => {
+		const randSix = Math.round(Math.random() * 6);
+		if (randSix > 4) reclickSketch(); 
+		else randomSketch();
+		playDirector()
+	}, randSec * 1000);
 }
