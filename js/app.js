@@ -403,7 +403,7 @@ const playDirector = () => {
 const detectDoubleTapClosure = () => {
   let lastTap = 0;
   let timeout;
-  return function detectDoubleTap(event) {
+  return detectDoubleTap = (event) => {
     const curTime = new Date().getTime();
     const tapLen = curTime - lastTap;
     if (tapLen < 500 && tapLen > 0) {
