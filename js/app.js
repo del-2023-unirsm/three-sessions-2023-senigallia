@@ -409,7 +409,7 @@ const detectDoubleTapClosure = () => {
 		const curTime = new Date().getTime();
 		const tapLen = curTime - lastTap;
 		if (tapLen < 500 && tapLen > 0) {
-			console.log('Double tapped!');
+			// console.log('Double tapped!');
 			randomSketch();
 			event.preventDefault();
 		} else {
