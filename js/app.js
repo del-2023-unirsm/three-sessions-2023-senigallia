@@ -239,11 +239,11 @@ class mic {
 		return this
 	}
 }
-global.initAudio = () => { // XXX special open day edition, don't use on live stage, see live release on github
+global.initAudio = () => { // OPENDAY 2024 AND BROWSER EDITION 
 	global.MIC = new mic()
 	// console.log(global.MIC)
 	document.getElementById("loader").style.display = "none"
-	randomSketch();
+	randomSketch()
 }
 
 // UI
@@ -257,21 +257,19 @@ const onKeyDown = (event) => {
 		} else if (keyCode == 220) toggleMouse() // \
 		else if (keyCode == 117) toggleFullscreen() // F6
 		else if (keyCode == 222) initAudio() // (shift) + ?
-		else if (keyCode == 32) {
+		else if (keyCode == 32) { // SPACE - Change to a random set and sketch
 			event.preventDefault()
 			randomSketch()
-		} else if (keyCode == 13) {
+		} else if (keyCode == 13) { // RETURN - Reclick current sketch
 			event.preventDefault()
 			reclickSketch()
 		} else if (keyCode == 116) {
-			event.preventDefault() // F5
+			event.preventDefault() // F5 - Director mode
 			if (!playingDirector) {
-				// console.log("play director")
 				document.getElementById("directorModeStatus").style.display = "initial"
 				playingDirector = true;
 				playDirector();
 			} else {
-				// console.log("stop director");
 				document.getElementById("directorModeStatus").style.display = "none"
 				playingDirector = false;
 				clearInterval(nextCut);
@@ -352,7 +350,7 @@ loadTexture('Lavatile', './assets/textures/lavatile', '.jpg') // 5
 // INIT
 const init = () => {
 	window.document.body.style.cursor = 'none'
-	toggleMouse()
+	toggleMouse() // xxx OPENDAY 2024 AND BROWSER EDITION */ 
 	changeSet(0)
 	// RENDERER
 	global.renderer = new THREE.WebGLRenderer({
@@ -372,9 +370,11 @@ const init = () => {
 }
 window.addEventListener('load', init)
 
+/* xxx OPENDAY 2024 AND BROWSER EDITION */
+/* change to a random set and sketch */
 const randomSketch = () => {
-	const sets = [0, 1, 2, 3, 4, 5, 6]
-	const sketches = [11, 12, 7, 13, 3, 5, 2]
+	const sets = [0, 1, 2, 3, 4, 5, 6] // available sets
+	const sketches = [11, 12, 7, 13, 3, 5, 2] // no. of available sketches for each set
 	global.playSet = Math.round(Math.random() * (sets.length - 1));
 	const playSetHowManySketches = sketches[playSet] - 2;
 	global.playSketch = 1 + Math.round(Math.random() * (playSetHowManySketches));
@@ -383,43 +383,44 @@ const randomSketch = () => {
 	changeSketch(global.playSketch);
 }
 
+/* reclick (re-init) current sketch */
 const reclickSketch = () => {
 	if (global.playSketch) {
 		changeSketch(global.playSketch);
 	}
 }
 
+/* director mode, auto play and switch between sketches 5-20 sec */
 const playDirector = () => {
 	const randSec = 5 + Math.round(Math.random() * 20);
 	nextCut = setTimeout(() => {
 		const randSix = Math.round(Math.random() * 6);
-		if (randSix > 4) reclickSketch(); 
-		else randomSketch();
+		if (randSix > 4) reclickSketch(); // 1/3 chances next reclick current sketch
+		else randomSketch(); // 2/3 chances next random sketch
 		playDirector()
 	}, randSec * 1000);
 }
 
-/* Based on this http://jsfiddle.net/brettwp/J4djY/*/
+/* Double tap check - based on this http://jsfiddle.net/brettwp/J4djY/*/
 const detectDoubleTapClosure = () => {
-  let lastTap = 0;
-  let timeout;
-  return detectDoubleTap = (event) => {
-    const curTime = new Date().getTime();
-    const tapLen = curTime - lastTap;
-    if (tapLen < 500 && tapLen > 0) {
-      // console.log('Double tapped!');
-      randomSketch();
-      event.preventDefault();
-    } else {
-      timeout = setTimeout(() => {
-        clearTimeout(timeout);
-      }, 500);
-    }
-    lastTap = curTime;
-  };
+	let lastTap = 0;
+	let timeout;
+	return function detectDoubleTap(event) {
+		const curTime = new Date().getTime();
+		const tapLen = curTime - lastTap;
+		if (tapLen < 500 && tapLen > 0) {
+			console.log('Double tapped!');
+			randomSketch();
+			event.preventDefault();
+		} else {
+			timeout = setTimeout(() => {
+				clearTimeout(timeout);
+			}, 500);
+		}
+		lastTap = curTime;
+	};
 }
-
 /* Regex test to determine if user is on mobile */
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    document.body.addEventListener('touchend', detectDoubleTapClosure(), { passive: false });
+	document.body.addEventListener('touchend', detectDoubleTapClosure(), { passive: false });
 }
