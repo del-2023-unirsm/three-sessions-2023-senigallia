@@ -239,11 +239,15 @@ class mic {
 		return this
 	}
 }
-global.initAudio = () => { // OPENDAY 2024 AND BROWSER EDITION 
+global.initAudio = () => { // OPENDAY 2024 AND BROWSER EDITION + SOUNDTRACK
 	global.MIC = new mic()
 	// console.log(global.MIC)
 	document.getElementById("loader").style.display = "none"
 	randomSketch()
+	const soundtrack = document.createElement('audio')
+	soundtrack.src="assets/soundtrack/soundtrack.mp3"
+	soundtrack.loop = true;
+	soundtrack.play();
 }
 
 // UI
@@ -255,7 +259,10 @@ const onKeyDown = (event) => {
 		else if (keyCode >= 48 && keyCode <= 57) { // 0-9
 			changeSet(keyCode - 48)
 		} else if (keyCode == 220) toggleMouse() // \
-		else if (keyCode == 117) toggleFullscreen() // F6
+		else if (keyCode == 117) {
+			event.preventDefault()
+			toggleFullscreen() // F6
+		}
 		else if (keyCode == 222) initAudio() // (shift) + ?
 		else if (keyCode == 32) { // SPACE - Change to a random set and sketch
 			event.preventDefault()
